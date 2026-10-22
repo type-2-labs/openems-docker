@@ -28,6 +28,9 @@ jobs:
         with:
           context: .
           push: true
+          # reuse compiled layers when a later step fails
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           tags: |
             ghcr.io/type-2-labs/openems:0.37.0
             ghcr.io/type-2-labs/openems:latest
