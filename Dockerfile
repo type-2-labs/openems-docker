@@ -20,4 +20,8 @@ ENV PATH=/opt/openEMS/bin:/opt/openEMS/venv/bin:${PATH} \
     LD_LIBRARY_PATH=/opt/openEMS/lib:${LD_LIBRARY_PATH}
 RUN python -c "import CSXCAD, openEMS; print('openEMS python OK')"
 
+# Vast.ai (and similar hosts) add SSH keys at start-up; sshd refuses them if /root has loose modes
+RUN chmod 700 /root && mkdir -p /root/.ssh && chmod 700 /root/.ssh \
+    && printf "StrictModes no\n" > /etc/ssh/sshd_config.d/10-hosted-keys.conf
+
 WORKDIR /workspace
